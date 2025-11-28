@@ -1,0 +1,27 @@
+{
+  "name": "synk-backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:pull": "drizzle-kit pull",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.39.0",
+    "pg": "^8.11.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.4",
+    "@types/node": "^22.10.2",
+    "@types/pg": "^8.10.0",
+    "dotenv": "^16.0.0",
+    "drizzle-kit": "^0.30.0",
+    "typescript": "^5.7.2",
+    "tsx": "^4.0.0"
+  }
+}

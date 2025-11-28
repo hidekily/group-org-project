@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: synk-postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
