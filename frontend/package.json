@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tanstack/react-router": "^1.132.0",
+    "better-auth": "^1.4.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.0.6"
