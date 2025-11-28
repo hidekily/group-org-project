@@ -1,8 +1,13 @@
 import { createAuthClient } from 'better-auth/react'
 
 export const authClient = createAuthClient({
-  baseURL: 'http://localhost:3001', // URL do seu backend
+  baseURL: 'http://localhost:3001',
 })
 
-// Exportar hooks úteis
-export const { useSession, signIn, signOut, signUp } = authClient
+// ✅ Exportar hooks e funções
+export const { 
+  useSession, 
+  signIn, 
+  signOut, 
+  signUp 
+} = authClient
