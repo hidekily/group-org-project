@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 // import do better auth 
-import { signIn } from '../lib/auth-client'
+import { signIn, signOut } from '../lib/auth-client'
 // import do react
 
 // imagem do grupo
@@ -30,9 +30,28 @@ function Index() {
           <img src={karina} alt="imagem do grupo" className='h-[80%] w-[80%] text-center bg-cover bg-center rounded-2xl border text-slate-400'/>
         </div>
         {/* child section para login e logout */}
-        <div className='w-[60%] h-[90%] flex flex-col justify-center items-center bg-emerald-900'>
-          {/* better auth */}
-          <button onClick={()=> signIn.social({provider: 'google'})} className='h-[50%] w-[50%] bg-slate-600'> login google</button>
+        <div className='w-[60%] h-[90%] flex flex-col justify-center items-center'>
+          {/* better auth Logout*/}
+          <div className='h-[75%] w-[100%] bg-sky-900 flex justify-center items-center'>
+            <button onClick={async ()=>{
+              try{
+                signOut()
+                alert("logout feito com sucesso")
+              } catch (error){
+                alert("erro ao fazer logout")
+              }
+            }}
+            className='p-5 bg-red-600 rounded-lg text-white font-bold hover:bg-red-800 transition-colors'
+            >
+              Logout
+            </button>
+          </div>
+          {/* googleLogin */}
+          <div className='h-[25%] w-[100%] bg-teal-900 flex justify-center items-center gap-3'>
+            <button onClick={()=> signIn.social({provider: 'google'})} className='google-login'>
+
+            </button>
+          </div>
         </div>
       </section>    
     </>
