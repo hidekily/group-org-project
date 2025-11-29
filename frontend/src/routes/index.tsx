@@ -17,7 +17,7 @@ function Index() {
   const handleGoogleLogin = async () => {
     await signIn.social({ 
       provider: 'google',
-      callbackURL: '/' // Opcional: para onde redirecionar após login
+      callbackURL: 'http://localhost:3000/' // Opcional: para onde redirecionar após login
     })
   }
 
@@ -48,7 +48,7 @@ function Index() {
           </div>
           {/* googleLogin */}
           <div className='h-[25%] w-[100%] bg-teal-900 flex justify-center items-center gap-3'>
-            <button onClick={()=> signIn.social({provider: 'google'})} className='google-login'>
+            <button onClick={()=> signIn.social({provider: 'google', callbackURL:'http://localhost:3000/'})} className='google-login'>
 
             </button>
           </div>
