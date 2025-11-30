@@ -13,7 +13,11 @@ body{
     width: 80px;
 
     background-image: url("/imgs/google.png");
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     border-radius: 50px;
+
+
+    margin-bottom: 4%;
+
 }

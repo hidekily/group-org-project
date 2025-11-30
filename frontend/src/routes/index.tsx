@@ -17,7 +17,20 @@ function Index() {
   const handleGoogleLogin = async () => {
     await signIn.social({ 
       provider: 'google',
-      callbackURL: 'http://localhost:3000/' // Opcional: para onde redirecionar após login
+      callbackURL: 'http://localhost:3000/'
+    })
+  }
+
+  const handleLogout = async () => {
+    try {
+      await signOut()
+    } catch (error) {
+      console.error('Erro:', error)
+    }
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/")
     })
   }
 
@@ -32,23 +45,16 @@ function Index() {
         {/* child section para login e logout */}
         <div className='w-[60%] h-[90%] flex flex-col justify-center items-center'>
           {/* better auth Logout*/}
-          <div className='h-[75%] w-[100%] bg-sky-900 flex justify-center items-center'>
-            <button onClick={async ()=>{
-              try{
-                signOut()
-                alert("logout feito com sucesso")
-              } catch (error){
-                alert("erro ao fazer logout")
-              }
-            }}
+          <div className='h-[65%] w-[100%] flex justify-center items-center'>
+            <button onClick={handleLogout}
             className='p-5 bg-red-600 rounded-lg text-white font-bold hover:bg-red-800 transition-colors'
             >
               Logout
             </button>
           </div>
           {/* googleLogin */}
-          <div className='h-[25%] w-[100%] bg-teal-900 flex justify-center items-center gap-3'>
-            <button onClick={()=> signIn.social({provider: 'google', callbackURL:'http://localhost:3000/'})} className='google-login'>
+          <div className='h-[35%] w-[100%] flex justify-center items-center gap-3'>
+            <button onClick={handleGoogleLogin} className='google-login'>
 
             </button>
           </div>
