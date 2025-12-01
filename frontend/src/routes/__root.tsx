@@ -1,12 +1,12 @@
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
 import '../styles.css'
-import { useSession} from '@/lib/auth-client'
-
+import {useSession} from '@/lib/auth-client'
 
 
 export const Route = createRootRoute({
   component: RootDocument,
 })
+
 
 function RootDocument() {
   const {data: session} = useSession()
@@ -39,7 +39,7 @@ function RootDocument() {
                           bg-slate-600 rounded-lg text-xl
                           mt-4 text-emerald-500 font-bold'
           >
-              {session?.user.name}
+            {session ? session.user.email : 'Não logado'}
           </nav>
         </section>
 

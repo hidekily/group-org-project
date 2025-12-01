@@ -2,7 +2,6 @@ import { createFileRoute } from '@tanstack/react-router'
 
 // import do better auth 
 import { signIn, signOut } from '../lib/auth-client'
-// import do react
 
 // imagem do grupo
 const karina = '/imgs/karina.jpeg'
@@ -17,7 +16,7 @@ function Index() {
   const handleGoogleLogin = async () => {
     await signIn.social({ 
       provider: 'google',
-      callbackURL: 'http://localhost:3000/'
+      callbackURL: '/'
     })
   }
 
