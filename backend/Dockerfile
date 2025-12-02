@@ -2,17 +2,20 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+# Instalar pnpm
+RUN npm install -g pnpm
+
 # Copiar package files
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 
 # Instalar dependências
-RUN npm install
+RUN pnpm install --frozen-lockfile
 
 # Copiar código
 COPY . .
 
 # Build TypeScript
-RUN npm run build
+RUN pnpm run build
 
 # Expor porta
 EXPOSE 3001
