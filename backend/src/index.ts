@@ -1,7 +1,6 @@
 import { createServer } from 'http'
-import { db } from './db/index.js'
 import { auth } from './lib/auth.js'
-import { createChapter, listChapters, deleteChapter } from './routes/manwha.ts'
+import { createChapter, listChapters, deleteChapter } from './routes/manwha.js'
 
 const PORT = process.env.PORT || 3001
 

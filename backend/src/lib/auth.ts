@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth"
 import { drizzleAdapter } from "better-auth/adapters/drizzle"
-import { db } from "../db/index.ts"
+import { db } from "../db/index.js"
 
 export const auth = betterAuth({
     baseURL: process.env.BACKEND_URL || "http://localhost:3001",

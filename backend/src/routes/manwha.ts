@@ -55,7 +55,7 @@ export async function createChapter(req: IncomingMessage, res: ServerResponse) {
   }
 }
 
-export async function listChapters(req: IncomingMessage, res: ServerResponse) {
+export async function listChapters(_req: IncomingMessage, res: ServerResponse) {
   try {
     const chapters = await db.query.manwhaChapters.findMany({
       orderBy: [desc(manwhaChapters.createdAt)],
