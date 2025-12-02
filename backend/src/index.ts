@@ -1,12 +1,24 @@
 import { createServer } from 'http'
 import { db } from './db/index.js'
 import { auth } from './lib/auth.js'
+import { createChapter, listChapters, deleteChapter } from './routes/manwha.ts'
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
+
+// URLs permitidas (localhost + produção)
+const ALLOWED_ORIGINS = [
+  'http://localhost:3000',
+  process.env.FRONTEND_URL, // URL do Vercel
+].filter(Boolean)
 
 const server = createServer(async (req, res) => {
   // Enable CORS
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+  const origin = req.headers.origin
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin)
+  } else {
+    res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGINS[0] || 'http://localhost:3000')
+  }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
   res.setHeader('Access-Control-Allow-Credentials', 'true')
@@ -110,6 +122,22 @@ const server = createServer(async (req, res) => {
       res.end(JSON.stringify({ error: 'Internal server error' }))
       return
     }
+  }
+
+    if (req.url === '/api/manwha' && req.method === 'POST') {
+    await createChapter(req, res)
+    return
+  }
+
+  if (req.url === '/api/manwha' && req.method === 'GET') {
+    await listChapters(req, res)
+    return
+  }
+
+  if (req.url?.startsWith('/api/manwha/') && req.method === 'DELETE') {
+    const chapterId = req.url.split('/').pop() || ''
+    await deleteChapter(req, res, chapterId)
+    return
   }
 
   // Health check

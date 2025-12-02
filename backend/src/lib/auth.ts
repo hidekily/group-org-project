@@ -3,8 +3,11 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle"
 import { db } from "../db/index.ts"
 
 export const auth = betterAuth({
-    baseURL: "http://localhost:3001",
-    trustedOrigins: ["http://localhost:3000"],
+    baseURL: process.env.BACKEND_URL || "http://localhost:3001",
+    trustedOrigins: [
+        "http://localhost:3000",
+        process.env.FRONTEND_URL || ""
+    ].filter(Boolean),
     database: drizzleAdapter(db, {
         provider: "pg",
     }),
