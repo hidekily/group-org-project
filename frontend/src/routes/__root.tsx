@@ -1,6 +1,7 @@
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
 import '../styles.css'
 import {useSession} from '@/lib/auth-client'
+import { authClient } from './../lib/auth-client';
 
 
 export const Route = createRootRoute({
@@ -9,7 +10,11 @@ export const Route = createRootRoute({
 
 
 function RootDocument() {
-  const {data: session} = useSession()
+  const {data: session, isPending, error} = authClient.useSession()
+
+  console.log('Session data:', session)
+  console.log('Session isPending:', isPending)
+  console.log('Session error:', error)
 
   return (
     <>
@@ -39,7 +44,7 @@ function RootDocument() {
                           bg-slate-600 rounded-lg text-xl
                           mt-4 text-emerald-500 font-bold'
           >
-            {session ? session.user.email : 'Não logado'}
+            {isPending ? 'Carregando...' : session?.user?.name || 'Não logado'}
           </nav>
         </section>
 

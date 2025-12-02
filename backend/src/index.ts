@@ -23,7 +23,10 @@ const server = createServer(async (req, res) => {
       const protocol = req.headers['x-forwarded-proto'] || 'http'
       const host = req.headers.host || `localhost:${PORT}`
       const url = `${protocol}://${host}${req.url}`
-      
+
+      console.log('Auth request:', req.method, url)
+      console.log('Request cookies:', req.headers.cookie || 'No cookies')
+
       // Coletar body da requisição
       let body = ''
       req.on('data', chunk => {
@@ -47,9 +50,49 @@ const server = createServer(async (req, res) => {
       // Chamar Better Auth
       const response = await auth.handler(webRequest)
 
+      console.log('Auth response status:', response.status)
+
+      // Obter headers e modificar cookies se necessário
+      const responseHeaders: Record<string, string | string[]> = Object.fromEntries(response.headers.entries())
+
+      // Se houver Set-Cookie, garantir que está configurado para localhost
+      if (responseHeaders['set-cookie']) {
+        const cookies = Array.isArray(responseHeaders['set-cookie'])
+          ? responseHeaders['set-cookie']
+          : [responseHeaders['set-cookie']]
+
+        console.log('Original cookies:', cookies)
+
+        // Modificar cookies para funcionar em localhost
+        const modifiedCookies = cookies.map(cookie => {
+          // Remove domain específico e garante SameSite=Lax
+          let modifiedCookie = cookie
+            .replace(/Domain=[^;]+;?\s*/gi, '')
+            .replace(/Secure;?\s*/gi, '')
+
+          // Adiciona SameSite=Lax se não existir
+          if (!modifiedCookie.includes('SameSite')) {
+            modifiedCookie += '; SameSite=Lax'
+          }
+
+          // Garante que Path está correto
+          if (!modifiedCookie.includes('Path')) {
+            modifiedCookie += '; Path=/'
+          }
+
+          return modifiedCookie
+        })
+
+        responseHeaders['set-cookie'] = modifiedCookies
+
+        console.log('Modified cookies:', modifiedCookies)
+      } else {
+        console.log('No Set-Cookie headers found')
+      }
+
       // Converter Web Response para Node.js Response
-      res.writeHead(response.status, Object.fromEntries(response.headers.entries()))
-      
+      res.writeHead(response.status, responseHeaders as any)
+
       if (response.body) {
         const reader = response.body.getReader()
         while (true) {
@@ -58,7 +101,7 @@ const server = createServer(async (req, res) => {
           res.write(value)
         }
       }
-      
+
       res.end()
       return
     } catch (error) {

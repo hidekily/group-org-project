@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-// import do better auth 
+// import do better auth
 import { signIn, signOut } from '../lib/auth-client'
 
 // imagem do grupo
@@ -14,23 +14,14 @@ export const Route = createFileRoute('/')({
 function Index() {
 
   const handleGoogleLogin = async () => {
-    await signIn.social({ 
+    await signIn.social({
       provider: 'google',
-      callbackURL: '/'
+      callbackURL: 'http://localhost:3000/'
     })
   }
 
   const handleLogout = async () => {
-    try {
-      await signOut()
-    } catch (error) {
-      console.error('Erro:', error)
-    }
-    document.cookie.split(";").forEach((c) => {
-      document.cookie = c
-        .replace(/^ +/, "")
-        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/")
-    })
+    await signOut()
   }
 
   return (
@@ -58,7 +49,7 @@ function Index() {
             </button>
           </div>
         </div>
-      </section>    
+      </section>
     </>
   )
 }
