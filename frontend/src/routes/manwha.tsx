@@ -26,11 +26,12 @@ function RouteComponent() {
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
 
-  
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+
   useEffect(() => {
     const fetchManwhas = async () => {
       try {
-        const res = await fetch('http://localhost:3001/api/manwha', {
+        const res = await fetch(`${API_URL}/api/manwha`, {
           credentials: 'include'
         })
         const data = await res.json()
@@ -42,32 +43,32 @@ function RouteComponent() {
       }
     }
     fetchManwhas()
-  }, [])
+  }, [API_URL])
 
 const handleSubmit = async () => {
   if (!formName || !formCap) return alert('Preencha tudo')
-  
+
   setSubmitting(true)
 
   try {
-    const res = await fetch('http://localhost:3001/api/manwha', {
+    const res = await fetch(`${API_URL}/api/manwha`, {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        title: formName, 
+      body: JSON.stringify({
+        title: formName,
         chapterNumber: parseInt(formCap)
       })
     })
 
     if (res.ok) {
       // ✅ AO INVÉS DE ADICIONAR MANUALMENTE, RECARREGA A LISTA
-      const refreshRes = await fetch('http://localhost:3001/api/manwha', {
+      const refreshRes = await fetch(`${API_URL}/api/manwha`, {
         credentials: 'include'
       })
       const updatedList = await refreshRes.json()
       setManwhas(updatedList)  // ← Atualiza com lista completa do banco
-      
+
       setFormName('')
       setFormCap('')
       alert('Adicionado!')
@@ -85,7 +86,7 @@ const handleSubmit = async () => {
     if (!confirm('Deletar?')) return
 
     try {
-      const res = await fetch(`http://localhost:3001/api/manwha/${id}`, {
+      const res = await fetch(`${API_URL}/api/manwha/${id}`, {
         method: 'DELETE',
         credentials: 'include',
       })
