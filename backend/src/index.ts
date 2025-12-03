@@ -5,10 +5,13 @@ import { createChapter, listChapters, deleteChapter } from './routes/manwha.js'
 const PORT = process.env.PORT || 3001
 
 // URLs permitidas (localhost + produção)
+// Normalizar URLs removendo barras no final
+const normalizeUrl = (url: string | undefined) => url?.replace(/\/$/, '')
+
 const ALLOWED_ORIGINS = [
-  process.env.FRONTEND_URL, // URL do Vercel (prioridade)
+  normalizeUrl(process.env.FRONTEND_URL), // URL do Vercel (prioridade)
   'http://localhost:3000',
-].filter(Boolean)
+].filter(Boolean) as string[]
 
 const server = createServer(async (req, res) => {
   // Enable CORS
