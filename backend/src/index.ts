@@ -67,40 +67,15 @@ const server = createServer(async (req, res) => {
 
       console.log('Auth response status:', response.status)
 
-      // Obter headers e modificar cookies se necessário
+      // Obter headers sem modificação
       const responseHeaders: Record<string, string | string[]> = Object.fromEntries(response.headers.entries())
 
-      // Se houver Set-Cookie, garantir que está configurado para localhost
+      // Log cookies para debug
       if (responseHeaders['set-cookie']) {
         const cookies = Array.isArray(responseHeaders['set-cookie'])
           ? responseHeaders['set-cookie']
           : [responseHeaders['set-cookie']]
-
-        console.log('Original cookies:', cookies)
-
-        // Modificar cookies para funcionar em localhost
-        const modifiedCookies = cookies.map(cookie => {
-          // Remove domain específico e garante SameSite=Lax
-          let modifiedCookie = cookie
-            .replace(/Domain=[^;]+;?\s*/gi, '')
-            .replace(/Secure;?\s*/gi, '')
-
-          // Adiciona SameSite=Lax se não existir
-          if (!modifiedCookie.includes('SameSite')) {
-            modifiedCookie += '; SameSite=Lax'
-          }
-
-          // Garante que Path está correto
-          if (!modifiedCookie.includes('Path')) {
-            modifiedCookie += '; Path=/'
-          }
-
-          return modifiedCookie
-        })
-
-        responseHeaders['set-cookie'] = modifiedCookies
-
-        console.log('Modified cookies:', modifiedCookies)
+        console.log('Set-Cookie headers:', cookies)
       } else {
         console.log('No Set-Cookie headers found')
       }
