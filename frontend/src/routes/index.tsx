@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 // import do better auth
-import { signIn, signOut } from '../lib/auth-client'
+import { signIn, signOut, useSession } from '../lib/auth-client'
 
 // imagem do grupo
 const karina = '/imgs/karina.jpeg'
@@ -13,10 +13,12 @@ export const Route = createFileRoute('/')({
 
 function Index() {
 
+  const {data: session} = useSession()
+
   const handleGoogleLogin = async () => {
     await signIn.social({
       provider: 'google',
-      callbackURL: window.location.origin
+      callbackURL: window.location.origin + '/'
     })
   }
 
@@ -34,20 +36,16 @@ function Index() {
         </div>
         {/* child section para login e logout */}
         <div className='w-[60%] h-[90%] flex flex-col justify-center items-center'>
-          {/* better auth Logout*/}
-          <div className='h-[65%] w-[100%] flex justify-center items-center'>
-            <button onClick={handleLogout}
-            className='p-5 bg-red-600 rounded-lg text-white font-bold hover:bg-red-800 transition-colors'
-            >
-              Logout
-            </button>
+          {session ? (
+            <div>
+              <button className='button-home bg-slate-600 text-emerald-500' onClick={handleLogout}>Logout</button>
+            </div>
+          ): 
+          (
+          <div>
+            <button className='button-home bg-slate-600 text-emerald-500' onClick={handleGoogleLogin}>Login</button>
           </div>
-          {/* googleLogin */}
-          <div className='h-[35%] w-[100%] flex justify-center items-center gap-3'>
-            <button onClick={handleGoogleLogin} className='google-login'>
-
-            </button>
-          </div>
+          )}
         </div>
       </section>
     </>

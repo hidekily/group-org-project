@@ -21,3 +21,10 @@ body{
     margin-bottom: 4%;
 
 }
+
+.button-home{
+    height: 100px;
+    width: 150px;
+
+    border-radius: 50px;
+}
