@@ -6,8 +6,8 @@ const PORT = process.env.PORT || 3001
 
 // URLs permitidas (localhost + produção)
 const ALLOWED_ORIGINS = [
+  process.env.FRONTEND_URL, // URL do Vercel (prioridade)
   'http://localhost:3000',
-  process.env.FRONTEND_URL, // URL do Vercel
 ].filter(Boolean)
 
 const server = createServer(async (req, res) => {
@@ -16,6 +16,7 @@ const server = createServer(async (req, res) => {
   if (origin && ALLOWED_ORIGINS.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin)
   } else {
+    // Usar a primeira URL válida (produção ou localhost)
     res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGINS[0] || 'http://localhost:3000')
   }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
