@@ -26,7 +26,17 @@ export const auth = betterAuth({
         updateAge: 60 * 60 * 24,
         expiresIn: 60 * 60 * 24 * 7,
         cookieCache: {
-            enabled: false, // Desabilitar cache para debug
+            enabled: false,
+        }
+    },
+    advanced: {
+        useSecureCookies: true,
+        cookiePrefix: "better-auth",
+        defaultCookieAttributes: {
+            sameSite: "none",
+            secure: true,
+            httpOnly: true,
+            path: "/",
         }
     },
     socialProviders: {
