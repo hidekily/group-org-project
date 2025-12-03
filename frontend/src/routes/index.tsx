@@ -16,7 +16,7 @@ function Index() {
   const handleGoogleLogin = async () => {
     await signIn.social({
       provider: 'google',
-      callbackURL: window.location.origin + '/'
+      callbackURL: window.location.origin
     })
   }
 
