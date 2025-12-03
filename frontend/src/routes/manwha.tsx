@@ -157,54 +157,54 @@ const handleDecrement = async (id: string, currentChapter: number) => {
 
   return (
     <>
-      <section className='h-[90vh] flex flex-col justify-start items-center'>
-        
+      <section className='min-h-[90vh] flex flex-col justify-start items-center p-4'>
+
         {/* FORMULÁRIO */}
-        <section className="h-[8vh] w-[50%] flex flex-row justify-center items-center gap-3">
-          <input 
-            type="text" 
+        <section className="w-full md:w-[50%] flex flex-col md:flex-row justify-center items-center gap-3 mb-6">
+          <input
+            type="text"
             value={formName}
-            onChange={(e) => setFormName(e.target.value)} 
+            onChange={(e) => setFormName(e.target.value)}
             placeholder='Nome do manwha'
-            className='p-2 rounded-lg bg-slate-800 text-white'          
+            className='w-full md:w-auto p-2 rounded-lg bg-slate-800 text-white'
           />
-          <input 
-            type="number" 
+          <input
+            type="number"
             value={formCap}
-            onChange={(e) => setFormCap(e.target.value)} 
+            onChange={(e) => setFormCap(e.target.value)}
             placeholder='Capítulo'
-            className='p-2 rounded-lg bg-slate-800 text-white'          
+            className='w-full md:w-auto p-2 rounded-lg bg-slate-800 text-white'
           />
           <button
             onClick={handleSubmit}
             disabled={submitting}
-            className='p-2 bg-emerald-600 rounded-lg text-white font-bold hover:bg-emerald-700 transition-colors disabled:opacity-50'
+            className='w-full md:w-auto p-2 bg-emerald-600 rounded-lg text-white font-bold hover:bg-emerald-700 transition-colors disabled:opacity-50'
           >
             {submitting ? 'Enviando...' : 'Adicionar'}
           </button>
         </section>
 
         {/* GRID DE LISTA */}
-        <section className="grid grid-cols-3 grid-rows-auto gap-4 h-[82vh] w-[100%] overflow-y-auto p-3">
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full overflow-y-auto">
           {/* SE VAZIO */}
           {manwhas.length === 0 && (
-            <div className="col-span-4 text-center text-slate-400 mt-10">
+            <div className="col-span-full text-center text-slate-400 mt-10">
               Nenhum manwha adicionado ainda
             </div>
           )}
           {/* SE TEM ITENS */}
           {manwhas.map((manwha) => (
-            <div key={manwha.id} className="bg-slate-600 rounded-lg flex flex-col p-4 text-emerald-300 font-bold h-[300px]">
-              <div className="h-[20%] text-3xl">{manwha.title}</div>
-              <div className='h-[40%] flex flex-row gap-2 items-center'>
-                <button  className="rounded-lg bg-zinc-900 h-[40px] w-[40px]" onClick={() => handleDecrement(manwha.id,manwha.chapterNumber)}>-1</button>
-                <button  className="rounded-lg bg-zinc-900 h-[40px] w-[40px]" onClick={() => handleIncrement(manwha.id,manwha.chapterNumber)}>+1</button>
-                <button className='rounded-lg bg-zinc-900 h-[40px] w-[40px]' onClick={() => handleDelete(manwha.id)}>🗑️</button>
+            <div key={manwha.id} className="bg-slate-600 rounded-lg flex flex-col p-4 text-emerald-300 font-bold min-h-[300px]">
+              <div className="text-2xl md:text-3xl mb-4">{manwha.title}</div>
+              <div className='flex flex-row gap-2 items-center mb-4'>
+                <button className="rounded-lg bg-zinc-900 h-[40px] w-[40px] hover:bg-zinc-800 transition-colors" onClick={() => handleDecrement(manwha.id,manwha.chapterNumber)}>-1</button>
+                <button className="rounded-lg bg-zinc-900 h-[40px] w-[40px] hover:bg-zinc-800 transition-colors" onClick={() => handleIncrement(manwha.id,manwha.chapterNumber)}>+1</button>
+                <button className='rounded-lg bg-zinc-900 h-[40px] w-[40px] hover:bg-zinc-800 transition-colors' onClick={() => handleDelete(manwha.id)}>🗑️</button>
               </div>
-              <div className="h-[40%] flex flex-row items-center gap-5">
-                <h2 className='text-3xl'>Cap: {manwha.chapterNumber}</h2>
-                <p className='text-sm'>Added by: {manwha.addedBy.name}</p>
-                <p className='text-sm'>{manwha.createdAt}</p>
+              <div className="flex flex-col gap-2">
+                <h2 className='text-2xl md:text-3xl'>Cap: {manwha.chapterNumber}</h2>
+                <p className='text-xs md:text-sm'>Added by: {manwha.addedBy.name}</p>
+                <p className='text-xs md:text-sm'>{new Date(manwha.createdAt).toLocaleDateString('pt-BR')}</p>
               </div>
             </div>
           ))}
