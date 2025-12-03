@@ -19,32 +19,27 @@ function RootDocument() {
   return (
     <>
         {/* section for navbar */}
-        <section className='h-[10vh] flex items-center justify-center gap-4'>
+        <section className='h-[10vh] flex items-center justify-center gap-4 px-4'>
           {/* navbar for routes */}
-          <nav className='flex flex-row w-[30%] h-[85%] bg-slate-600 rounded-lg text-xl
+          <nav className='flex flex-row w-full md:w-[80%] lg:w-[60%] xl:w-[30%] h-[85%] bg-slate-600 rounded-lg text-base md:text-xl
                           mt-4 justify-center items-center gap-2 text-emerald-500 font-bold'>
 
             {/* link para Home  */}
-            <Link to="/" activeProps={{className: 'text-2xl'}} >
+            <Link to="/" activeProps={{className: 'text-lg md:text-2xl'}} >
               Home
             </Link> |
 
             {/* Link para o grupo */}
-            <Link to="/group" activeProps={{className: 'text-2xl'}}>
+            <Link to="/group" activeProps={{className: 'text-lg md:text-2xl'}}>
               Grupo
             </Link> |
 
             {/* link para lista de manwha do lucas */}
-            <Link to="/manwha" activeProps={{className: 'text-2xl'}}>
+            <Link to="/manwha" activeProps={{className: 'text-lg md:text-2xl'}}>
               Manwha
-            </Link>
-          </nav>
+            </Link> |
 
-          <nav className='w-[8%] h-[85%] flex justify-center items-center
-                          bg-slate-600 rounded-lg text-xl
-                          mt-4 text-emerald-500 font-bold'
-          >
-            {isPending ? 'Carregando...' : session?.user?.name || 'Não logado'}
+            <p className='text-rose-400 text-sm md:text-base'>{isPending ? 'Carregando...' : session?.user?.name || 'Não logado'}</p>
           </nav>
         </section>
 
