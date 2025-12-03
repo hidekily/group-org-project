@@ -2,8 +2,19 @@ import { betterAuth } from "better-auth"
 import { drizzleAdapter } from "better-auth/adapters/drizzle"
 import { db } from "../db/index.js"
 
+// Construir baseURL corretamente
+const getBaseURL = () => {
+    if (process.env.BACKEND_URL) {
+        return process.env.BACKEND_URL
+    }
+    if (process.env.RAILWAY_PUBLIC_DOMAIN) {
+        return `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+    }
+    return "http://localhost:3001"
+}
+
 export const auth = betterAuth({
-    baseURL: process.env.BACKEND_URL || "http://localhost:3001",
+    baseURL: getBaseURL(),
     trustedOrigins: [
         "http://localhost:3000",
         process.env.FRONTEND_URL || ""
