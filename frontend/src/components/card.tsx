@@ -32,22 +32,18 @@ export function RoleCard({ option, currentUserId, onVote, allOptions }: RoleCard
       }`}
       onClick={handleVote}
     >
-      {/* Badge de vencedor */}
       {isWinning && (
         <div className="absolute -top-3 -right-3 bg-yellow-400 text-slate-900 px-3 py-1 rounded-full font-bold text-sm flex items-center gap-1">
           🏆 Vencendo
         </div>
       )}
 
-      {/* Barra de progresso no fundo */}
       <div
         className="absolute inset-0 bg-emerald-600/20 transition-all duration-500 rounded-lg"
         style={{ width: `${percentage}%` }}
       />
 
-      {/* Conteudo */}
       <div className="relative flex flex-col h-full">
-        {/* Local */}
         <div className="mb-4">
           <p className="text-sm text-slate-400 mb-1">Local:</p>
           <h2 className="text-2xl md:text-3xl font-bold text-emerald-300">
@@ -55,7 +51,6 @@ export function RoleCard({ option, currentUserId, onVote, allOptions }: RoleCard
           </h2>
         </div>
 
-        {/* Horario */}
         <div className="mb-6">
           <p className="text-sm text-slate-400 mb-1">Horario:</p>
           <p className="text-xl font-bold text-white">
@@ -63,7 +58,6 @@ export function RoleCard({ option, currentUserId, onVote, allOptions }: RoleCard
           </p>
         </div>
 
-        {/* Votos */}
         <div className="mt-auto">
           <div className="flex items-center justify-between bg-slate-700/50 rounded-lg p-3">
             <div className="flex items-center gap-2">
@@ -85,7 +79,6 @@ export function RoleCard({ option, currentUserId, onVote, allOptions }: RoleCard
         </div>
       </div>
 
-      {/* Indicador de ja votou */}
       {userHasVoted && option.voters.includes(currentUserId) && (
         <div className="absolute top-4 right-4 bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-bold">
           ✓ Seu voto
