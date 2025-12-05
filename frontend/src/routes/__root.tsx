@@ -11,11 +11,6 @@ export const Route = createRootRoute({
 
 function RootDocument() {
   const {data: session, isPending, error} = authClient.useSession()
-
-  console.log('Session data:', session)
-  console.log('Session isPending:', isPending)
-  console.log('Session error:', error)
-
   return (
     <>
         {/* section for navbar */}

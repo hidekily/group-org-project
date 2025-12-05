@@ -62,12 +62,11 @@ const handleSubmit = async () => {
     })
 
     if (res.ok) {
-      // ✅ AO INVÉS DE ADICIONAR MANUALMENTE, RECARREGA A LISTA
       const refreshRes = await fetch(`${API_URL}/api/manwha`, {
         credentials: 'include'
       })
       const updatedList = await refreshRes.json()
-      setManwhas(updatedList)  // ← Atualiza com lista completa do banco
+      setManwhas(updatedList)  // Atualiza com lista completa do banco
 
       setFormName('')
       setFormCap('')
@@ -84,7 +83,6 @@ const handleSubmit = async () => {
 
   const handleDelete = async (id: string) => {
     if (!confirm('Deletar?')) return
-
     try {
       const res = await fetch(`${API_URL}/api/manwha/${id}`, {
         method: 'DELETE',
@@ -106,8 +104,8 @@ const handleSubmit = async () => {
     return <div className="text-white text-center mt-10">Carregando...</div>
   }
 
-  // ✅ Incrementar (+1)
-const handleIncrement = async (id: string, currentChapter: number) => {
+  // +
+  const handleIncrement = async (id: string, currentChapter: number) => {
   const newChapter = currentChapter + 1
 
   // Atualiza UI imediatamente
@@ -131,8 +129,8 @@ const handleIncrement = async (id: string, currentChapter: number) => {
   }
 }
 
-// ✅ Decrementar (-1)
-const handleDecrement = async (id: string, currentChapter: number) => {
+  //  -
+  const handleDecrement = async (id: string, currentChapter: number) => {
   if (currentChapter <= 1) return
 
   const newChapter = currentChapter - 1
