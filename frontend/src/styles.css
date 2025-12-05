@@ -8,19 +8,6 @@ body{
     background-color: #262626;
 }
 
-.google-login{
-    height: 80px;
-    width: 80px;
-
-    background-image: url("/imgs/google.png");
-    background-size: contain;
-    background-position: center;
-    border-radius: 50px;
-
-
-    margin-bottom: 4%;
-
-}
 
 .button-home{
     height: 100px;
